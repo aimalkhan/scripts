@@ -1,0 +1,21 @@
+# Purpose:
+# resize and compress images
+# useful for compliance with visa/immigration file size requirements
+
+# Prereqs:
+# works on mac iOS Sonoma 14.1.2 (23B92)
+# needs imagemagick library that can be installed from homebrew using `brew install imagemagick`
+
+# logic:
+# create two directories to store resulting files
+# go through all the jpg images in the directory, resize them to Ax836 (keeping aspect ratio the same), and compress them to 40%
+
+# how to use:
+# paste the script directly into the directory containing the .jpg images
+
+mkdir resize
+mkdir resize_and_compress
+for image in *.jpg; do
+    sips -Z 836 $image --out "resize/${image%.jpg}_resize.jpg"
+    convert "resize/${image%.jpg}_resize.jpg" -quality 40% "resize_and_compress/${image%.jpg}_compress.jpg"
+done
